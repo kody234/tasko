@@ -37,6 +37,7 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 Switch(
                   activeColor: Colors.black,
                   onChanged: (bool value) {
+                    Navigator.pop(context);
                     setState(() {});
                     themeBox.values.first.light = value;
                     themeBox.putAt(0, LightTheme(light: value));
