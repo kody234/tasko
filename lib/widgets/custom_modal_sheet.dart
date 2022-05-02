@@ -1,11 +1,12 @@
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../model/task_model.dart';
+import '../model/task_model1.dart';
 import '../provider/task_manager.dart';
 
 class CustomModalSheet {
@@ -18,17 +19,23 @@ class CustomModalSheet {
     showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            title: const Text('Material Dialog'),
-            content: SingleChildScrollView(
-              child: BlockPicker(
-                pickerColor: pickerColor,
-                onColorChanged: changeColor,
+          return SizedBox(
+            height: 400,
+            width: 400,
+            child: AlertDialog(
+              title: const Text('Material Dialog'),
+              content: SingleChildScrollView(
+                child: BlockPicker(
+                  useInShowDialog: true,
+                  pickerColor: pickerColor,
+                  onColorChanged: changeColor,
+                ),
               ),
+              actions: <Widget>[
+                ElevatedButton(
+                    child: const Text('Got it'), onPressed: function),
+              ],
             ),
-            actions: <Widget>[
-              ElevatedButton(child: const Text('Got it'), onPressed: function),
-            ],
           );
         });
   }
@@ -48,14 +55,8 @@ class CustomModalSheet {
                 child: Column(
                   children: [
                     Center(
-                      child: Text(
-                        'Name your Task',
-                        style: TextStyle(
-                          fontSize: 25.sp,
-                          fontWeight: FontWeight.w800,
-                          color: const Color(0xFF303030),
-                        ),
-                      ),
+                      child: Text('Name your Task',
+                          style: Theme.of(context).textTheme.headline4),
                     ),
                     TextFormField(
                       controller: textController,
@@ -66,17 +67,17 @@ class CustomModalSheet {
                             context, changeColor, function, pickerColor);
                       },
                       child: Container(
-                          height: 40.h,
-                          width: 80.w,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.r),
-                            color: const Color(0xFF303030),
-                          ),
-                          child: const Center(
-                              child: Text(
-                            'Create task',
-                            style: TextStyle(color: Colors.white),
-                          ))),
+                        height: 40.h,
+                        width: 80.w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10.r),
+                          color: const Color(0xFF303030),
+                        ),
+                        child: Center(
+                          child: Text('Create task',
+                              style: Theme.of(context).textTheme.headline5),
+                        ),
+                      ),
                     )
                   ],
                 ),
@@ -85,7 +86,13 @@ class CustomModalSheet {
   }
 
   void showTodoModal(
-      BuildContext context, TextEditingController textController, int index) {
+      BuildContext context,
+      TextEditingController textController,
+      int index,
+      String date,
+      Task task,
+      Box taskBox,
+      void Function()? function) {
     showMaterialModalBottomSheet(
         context: context,
         builder: (context) => SizedBox(
@@ -97,23 +104,14 @@ class CustomModalSheet {
                     Center(
                       child: Text(
                         'Name your Todo',
-                        style: TextStyle(
-                          fontSize: 25.sp,
-                          fontWeight: FontWeight.w800,
-                          color: const Color(0xFF303030),
-                        ),
+                        style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
                     TextFormField(
                       controller: textController,
                     ),
                     TextButton(
-                      onPressed: () {
-                        Provider.of<TaskManager>(context, listen: false)
-                            .addtodo(index, Todo(title: textController.text));
-
-                        Navigator.pop(context);
-                      },
+                      onPressed: function,
                       child: Container(
                         height: 40.h,
                         width: 80.w,
@@ -121,10 +119,10 @@ class CustomModalSheet {
                           borderRadius: BorderRadius.circular(10.r),
                           color: const Color(0xFF303030),
                         ),
-                        child: const Center(
+                        child: Center(
                           child: Text(
                             'Create todo',
-                            style: TextStyle(color: Colors.white),
+                            style: Theme.of(context).textTheme.headline5,
                           ),
                         ),
                       ),
