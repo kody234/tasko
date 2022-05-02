@@ -5,8 +5,8 @@ class AppTheme {
   TextTheme lightTextTheme = TextTheme(
     headline1: TextStyle(
         color: Color(0xFF303030), fontSize: 30.sp, fontWeight: FontWeight.w900),
-    headline2:
-        const TextStyle(color: Color(0xFFAEAEAF), fontWeight: FontWeight.w500),
+    headline2: TextStyle(
+        color: Color(0xFFAEAEAF), fontWeight: FontWeight.w500, fontSize: 30.sp),
     headline3: TextStyle(
         color: Color(0xFF303030), fontWeight: FontWeight.w600, fontSize: 13.sp),
     headline4: TextStyle(
@@ -30,8 +30,8 @@ class AppTheme {
   TextTheme darkTextTheme = TextTheme(
     headline1: TextStyle(
         color: Colors.white, fontSize: 30.sp, fontWeight: FontWeight.w900),
-    headline2:
-        const TextStyle(color: Color(0xFFAEAEAF), fontWeight: FontWeight.w500),
+    headline2: TextStyle(
+        color: Color(0xFFAEAEAF), fontWeight: FontWeight.w500, fontSize: 30.sp),
     headline3: TextStyle(
         color: Colors.white, fontWeight: FontWeight.w600, fontSize: 13.sp),
     headline4: TextStyle(
